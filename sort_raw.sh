@@ -1,10 +1,10 @@
-#!/bin/bash 
+#!/bin/bash
 
 # This bash script checks if a RAW file contains an XMP sidecar file along with
 # it and has a rating tag higher than XMP_RATING_MIN variable, it creates a new
 # folder in EDITS_BASE folder, and copies all related files from the original
 # directory there.
- 
+
 EDITS_BASE="/mnt/win/edits"
 XMP_RATING_MIN=2
 
@@ -29,7 +29,7 @@ EDITS_DIR=$EDITS_BASE/${WORK_DIR}_sorted
 echo ""
 if [ ! -d "$EDITS_DIR" ]; then
 	echo "The $EDITS_DIR folder doesn't exist, creating it..."
-	mkdir $EDITS_DIR
+	mkdir "$EDITS_DIR"
 else
 	echo "The $EDITS_DIR folder OK. Going further..."
 fi
@@ -41,33 +41,33 @@ for XMP in *.xmp;
         echo ""
         echo "Processing $XMP XMP file"
 
-        XMP_RATING=$(grep -oPm1 "(?<=<xmp:Rating>)[^<]+" $XMP)
+        XMP_RATING=$(grep -oPm1 "(?<=<xmp:Rating>)[^<]+" "$XMP")
 
         if [[ -z "$XMP_RATING" ]];then
 
             echo "XMP Rating for file $XMP is NULL skipping..."
 
         elif [ "$XMP_RATING" -ge "$XMP_RATING_MIN" ];then
-     
+
             echo "XMP Rating for file $XMP is $XMP_RATING"
 
             RAW_DIR=$EDITS_DIR/"${XMP%.*}"
-    
+
                 if [ ! -d "$RAW_DIR" ]; then
     	        echo "The $RAW_DIR folder doesn't exist, creating it..."
-                    mkdir $RAW_DIR
+                    mkdir "$RAW_DIR"
                 else
     	        echo "The $RAW_DIR folder OK. Going further..."
                 fi
-    
+
             echo "Copying files to target directory..."
-            cp "${XMP%.*}".* $RAW_DIR
+            cp "${XMP%.*}".* "$RAW_DIR"
             COUNTER=$((COUNTER+1))
             echo "Done"
         else
             echo "XMP Rating for file $XMP is not enough, skipping..."
         fi
-        
+
     done
 echo ""
 
