@@ -27,6 +27,7 @@ fi
 EDITS_DIR=$EDITS_BASE/${WORK_DIR}_sorted
 
 echo ""
+
 if [ ! -d "$EDITS_DIR" ]; then
 	echo "The $EDITS_DIR folder doesn't exist, creating it..."
 	mkdir "$EDITS_DIR"
@@ -35,6 +36,7 @@ else
 fi
 
 echo ""
+
 for XMP in *.xmp;
     do
         echo ""
@@ -69,9 +71,11 @@ for XMP in *.xmp;
         fi
 
     done
+
 echo ""
 
 touch sort_raw_results.txt
+
 echo "Script finished its work at $DATETIME" | tee -a sort_raw_results.txt
 echo "$COUNTER files copied to $EDITS_DIR folder" | tee -a sort_raw_results.txt
 
